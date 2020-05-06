@@ -1,13 +1,7 @@
 FactoryBot.define do
   factory :task do
-    sequence :name do |n|
-      "Task#{n}"
-    end
-
-    sequence :description do |n|
-      "task description #{n}"
-    end
-
+    name { generate :string }
+    description { generate :string }
     state
     expired_at { Time.now + 6.month }
 
