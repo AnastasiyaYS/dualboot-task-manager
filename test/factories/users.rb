@@ -2,11 +2,21 @@
 
 FactoryBot.define do
   factory :user do
-    first_name { generate :string }
-    last_name { generate :string }
-    password { generate :string }
-    email { generate :email }
-    avatar {}
-    type {}
+    first_name
+    last_name
+    password
+    email
+
+    factory :admin do
+      type { 'Admin' }
+    end
+
+    factory :developer do
+      type { 'Developer' }
+    end
+
+    factory :manager do
+      type { 'Manager' }
+    end
   end
 end
