@@ -5,7 +5,7 @@ class SessionForm
 
   attr_accessor(
     :email,
-    :password
+    :password,
   )
 
   validates :email, presence: true, format: { with: /\A\S+@.+\.\S+\z/ }
