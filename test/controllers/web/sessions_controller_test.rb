@@ -23,6 +23,6 @@ class Web::SessionsControllerTest < ActionController::TestCase
   test "should delete destroy" do
     delete :destroy
     assert_response :redirect
-    assert_nill session[:user_id]
+    assert_nil session[:user_id]
   end
 end
