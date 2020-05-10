@@ -17,12 +17,12 @@ class Web::SessionsControllerTest < ActionController::TestCase
     }
     post :create, params: { session_form: attrs }
     assert_response :redirect
-    assert_redirected_to :board
+    assert :signed_in?
   end
   
   test "should delete destroy" do
     delete :destroy
     assert_response :redirect
-    assert_redirected_to :new_session
+    assert_nill session[:user_id]
   end
 end
