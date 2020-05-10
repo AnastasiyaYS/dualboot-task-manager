@@ -11,5 +11,6 @@ class Web::DevelopersControllerTest < ActionController::TestCase
   test 'should post create' do
     post :create, params: { developer: attributes_for(:developer) }
     assert_response :redirect
+    assert :signed_in?
   end
 end
