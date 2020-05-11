@@ -10,9 +10,11 @@ class Web::DevelopersControllerTest < ActionController::TestCase
   end
 
   test 'should post create' do
-    post :create, params: { developer: attributes_for(:developer) }
+    attrs = attributes_for(:developer)
+    email = attrs[:email]
+    post :create, params: { developer: attrs }
     assert_response :redirect
-    assert signed_in?
     assert_equal current_user.type, 'Developer'
+    assert_equal Developer.last.email, email
   end
 end
