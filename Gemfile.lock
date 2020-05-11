@@ -189,9 +189,6 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
-    slim_lint (0.20.0)
-      rubocop (>= 0.78.0)
-      slim (>= 3.0, < 5.0)
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -252,7 +249,6 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   slim-rails
-  slim_lint
   state_machines
   state_machines-activerecord
   tzinfo-data
