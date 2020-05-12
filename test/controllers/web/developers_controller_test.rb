@@ -14,7 +14,7 @@ class Web::DevelopersControllerTest < ActionController::TestCase
     email = attrs[:email]
     post :create, params: { developer: attrs }
     assert_response :redirect
-    assert_equal current_user.type, 'Developer'
-    assert_equal Developer.last.email, email
+    user = User.find_by email: email
+    assert_equal user.type, 'Developer'
   end
 end
