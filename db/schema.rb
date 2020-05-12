@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,36 +12,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_112110) do
-
+ActiveRecord::Schema.define(version: 20_200_504_112_110) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "tasks", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "state"
-    t.date "expired_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "author_id"
-    t.bigint "assignee_id"
-    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
-    t.index ["author_id"], name: "index_tasks_on_author_id"
+  create_table 'tasks', force: :cascade do |t|
+    t.string 'name'
+    t.text 'description'
+    t.string 'state'
+    t.date 'expired_at'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.bigint 'author_id'
+    t.bigint 'assignee_id'
+    t.index ['assignee_id'], name: 'index_tasks_on_assignee_id'
+    t.index ['author_id'], name: 'index_tasks_on_author_id'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "password_digest"
-    t.string "email"
-    t.string "avatar"
-    t.string "type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+  create_table 'users', force: :cascade do |t|
+    t.string 'first_name'
+    t.string 'last_name'
+    t.string 'password_digest'
+    t.string 'email'
+    t.string 'avatar'
+    t.string 'type'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
   end
 
-  add_foreign_key "tasks", "users", column: "assignee_id"
-  add_foreign_key "tasks", "users", column: "author_id"
+  add_foreign_key 'tasks', 'users', column: 'assignee_id'
+  add_foreign_key 'tasks', 'users', column: 'author_id'
 end
