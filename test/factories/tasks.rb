@@ -1,14 +1,9 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :task do
-    sequence :name do |n|
-      "Task#{n}"
-    end
-
-    sequence :description do |n|
-      "task description #{n}"
-    end
-
-    state
+    name
+    description
     expired_at { Time.now + 6.month }
 
     trait :author do

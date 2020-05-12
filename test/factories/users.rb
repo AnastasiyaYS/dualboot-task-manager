@@ -1,22 +1,22 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
-    sequence :first_name do |n|
-      "FirstName#{n}"
+    first_name
+    last_name
+    password
+    email
+
+    factory :admin do
+      type { 'Admin' }
     end
 
-    sequence :last_name do |n|
-      "LastName#{n}"
+    factory :developer do
+      type { 'Developer' }
     end
 
-    sequence :password do |n|
-      "password#{n}"
+    factory :manager do
+      type { 'Manager' }
     end
-
-    sequence :email do |n|
-      "person#{n}@example.com"
-    end
-
-    avatar
-    type
   end
 end
