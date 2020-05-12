@@ -15,6 +15,7 @@ class Web::DevelopersControllerTest < ActionController::TestCase
     post :create, params: { developer: attrs }
     assert_response :redirect
     user = User.find_by email: email
+    assert_not_nil user
     assert_equal user.type, 'Developer'
   end
 end
