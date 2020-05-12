@@ -5,13 +5,7 @@ FactoryBot.define do
     name
     description
     expired_at { Time.now + 6.month }
-
-    trait :author do
-      author
-    end
-
-    trait :assignee do
-      assignee
-    end
+    author factory: :manager
+    assignee factory: :developer
   end
 end
