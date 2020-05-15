@@ -29,9 +29,11 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test 'should post create' do
-    user = attributes_for(:user)
-    post :create, params: { user: user }
+    user_attrs = attributes_for(:user)
+    post :create, params: { user: user_attrs }
     assert_response :redirect
+    found_user = User.find_by(email: user_attrs[:email])
+    assert_not_nil found_user
   end
 
   test 'should patch update' do
@@ -39,11 +41,15 @@ class Admin::UsersControllerTest < ActionController::TestCase
     user_attrs = attributes_for(:user)
     patch :update, params: { id: user.id, user: user_attrs }
     assert_response :redirect
+    found_user = User.find_by(id: user.id)
+    assert_equal found_user.email, user_attrs[:email]
   end
 
   test 'should delete destroy' do
     user = create(:user)
     delete :destroy, params: { id: user.id }
     assert_response :redirect
+    found_user = User.find_by(id: user.id)
+    assert_nil found_user
   end
 end
