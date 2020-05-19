@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'date'
 
 class Api::V1::TasksControllerTest < ActionController::TestCase
   test 'should get show' do
@@ -25,6 +26,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     data = JSON.parse(response.body)
     created_task = Task.find(data['task']['id'])
 
+    task_attributes[:expired_at] = Date.parse(task_attributes[:expired_at].strftime('%a, %d %b %Y'))
     assert created_task.present?
     assert_equal task_attributes.stringify_keys, created_task.slice(*task_attributes.keys)
   end
@@ -40,6 +42,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     patch :update, params: { id: task.id, format: :json, task: task_attributes }
     assert_response :success
 
+    task_attributes['expired_at'] = Date.parse(task_attributes['expired_at'].strftime('%a, %d %b %Y'))
     task.reload
     assert_equal task.slice(*task_attributes.keys), task_attributes
   end
