@@ -24,8 +24,8 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     assert_response :created
 
     data = JSON.parse(response.body)
+    assert Task.exists?(data['task']['id'])
     created_task = Task.find(data['task']['id'])
-    assert_not_nil created_task
 
     task_attributes[:expired_at] = Date.parse(task_attributes[:expired_at].strftime('%a, %d %b %Y'))
     assert_equal task_attributes.stringify_keys, created_task.slice(*task_attributes.keys)
