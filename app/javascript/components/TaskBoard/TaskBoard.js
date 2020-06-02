@@ -4,6 +4,7 @@ import { propOr } from 'ramda';
 
 import Task from 'components/Task';
 import TasksRepository from 'repositories/TasksRepository';
+import ColumnHeader from 'components/ColumnHeader';
 
 const STATES = [
   { key: 'new_task', value: 'New' },
@@ -26,7 +27,7 @@ const initialBoard = {
 
 const TaskBoard = () => {
   const [board, setBoard] = useState(initialBoard);
-  const [boardCards, setBoardCards] = useState([]);
+  const [boardCards, setBoardCards] = useState({});
 
   const loadColumn = (state, page, perPage) => {
     return TasksRepository.index({
@@ -47,13 +48,24 @@ const TaskBoard = () => {
     });
   };
 
+  const loadColumnMore = (state, page = 1, perPage = 10) => {
+    loadColumn(state, page, perPage).then(({ data }) => {
+      setBoardCards((prevState) => {
+        return {
+          ...prevState,
+          [state]: { cards: prevState[state].cards.concat(data.items), meta: data.meta },
+        };
+      });
+    });
+  };
+
   const generateBoard = () => {
     const generatedBoard = {
       columns: STATES.map(({ key, value }) => {
         return {
           id: key,
           title: value,
-          cards: propOr({}, 'cards', boardCards[key]),
+          cards: propOr([], 'cards', boardCards[key]),
           meta: propOr({}, 'meta', boardCards[key]),
         };
       }),
@@ -70,7 +82,11 @@ const TaskBoard = () => {
   useEffect(() => generateBoard(), [boardCards]);
 
   return (
-    <KanbanBoard disableColumnDrag renderCard={(card) => <Task task={card} />}>
+    <KanbanBoard
+      disableColumnDrag
+      renderCard={(card) => <Task task={card} />}
+      renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
+    >
       {board}
     </KanbanBoard>
   );
