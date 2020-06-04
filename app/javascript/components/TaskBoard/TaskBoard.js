@@ -5,6 +5,13 @@ import { propOr } from 'ramda';
 import Task from 'components/Task';
 import TasksRepository from 'repositories/TasksRepository';
 import ColumnHeader from 'components/ColumnHeader';
+import AddPopup from 'components/AddPopup';
+import TaskForm from 'forms/TaskForm';
+
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+import useStyles from './useStyles';
 
 const STATES = [
   { key: 'new_task', value: 'New' },
@@ -26,8 +33,16 @@ const initialBoard = {
 };
 
 const TaskBoard = () => {
+  const styles = useStyles();
+
+  const MODES = {
+    ADD: 'add',
+    NONE: 'none',
+  };
+
   const [board, setBoard] = useState(initialBoard);
   const [boardCards, setBoardCards] = useState({});
+  const [mode, setMode] = useState(MODES.NONE);
 
   const loadColumn = (state, page, perPage) => {
     return TasksRepository.index({
@@ -98,15 +113,37 @@ const TaskBoard = () => {
       });
   };
 
+  const handleOpenAddPopup = () => {
+    setMode(MODES.ADD);
+  };
+
+  const handleClose = () => {
+    setMode(MODES.NONE);
+  };
+
+  const handleTaskCreate = (params) => {
+    const attributes = TaskForm.attributesToSubmit(params);
+    return TasksRepository.create({ task: attributes }).then(({ data: { task } }) => {
+      loadColumnInitial(task.state);
+      handleClose();
+    });
+  };
+
   return (
-    <KanbanBoard
-      disableColumnDrag
-      renderCard={(card) => <Task task={card} />}
-      renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
-      onCardDragEnd={handleCardDragEnd}
-    >
-      {board}
-    </KanbanBoard>
+    <>
+      <Fab className={styles.addButton} color="primary" aria-label="add" onClick={handleOpenAddPopup}>
+        <AddIcon />
+      </Fab>
+      {mode === MODES.ADD && <AddPopup onCreateCard={handleTaskCreate} onClose={handleClose} />}
+      <KanbanBoard
+        disableColumnDrag
+        renderCard={(card) => <Task task={card} />}
+        renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
+        onCardDragEnd={handleCardDragEnd}
+      >
+        {board}
+      </KanbanBoard>
+    </>
   );
 };
 
