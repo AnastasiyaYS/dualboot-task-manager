@@ -24,6 +24,12 @@ const STATES = [
   { key: 'archived', value: 'Archived' },
 ];
 
+const MODES = {
+  ADD: 'add',
+  EDIT: 'edit',
+  NONE: 'none',
+};
+
 const initialBoard = {
   columns: STATES.map((column) => ({
     id: column.key,
@@ -35,12 +41,6 @@ const initialBoard = {
 
 const TaskBoard = () => {
   const styles = useStyles();
-
-  const MODES = {
-    ADD: 'add',
-    EDIT: 'edit',
-    NONE: 'none',
-  };
 
   const [board, setBoard] = useState(initialBoard);
   const [boardCards, setBoardCards] = useState({});
