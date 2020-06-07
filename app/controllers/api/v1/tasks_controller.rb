@@ -1,8 +1,8 @@
 class Api::V1::TasksController < Api::V1::ApplicationController
   def index
-    tasks = Task.
-      ransack(ransack_params).
+    tasks = Task.ransack(ransack_params).
       result.
+      order(id: :desc).
       page(page).
       per(per_page)
 
