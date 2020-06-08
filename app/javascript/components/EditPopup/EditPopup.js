@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isNil } from 'ramda';
 
 import Form from 'components/Form';
+import TaskPresenter from 'presenters/TaskPresenter';
 
 import Modal from '@material-ui/core/Modal';
 import Card from '@material-ui/core/Card';
@@ -61,7 +62,11 @@ const EditPopup = ({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
               <CloseIcon />
             </IconButton>
           }
-          title={isLoading ? 'Your task is loading. Please be patient.' : `Task # ${task.id} [${task.name}]`}
+          title={
+            isLoading
+              ? 'Your task is loading. Please be patient.'
+              : `Task # ${TaskPresenter.id(task)} [${TaskPresenter.name(task)}]`
+          }
         />
         <CardContent>
           {isLoading ? (
