@@ -8,6 +8,7 @@ import ColumnHeader from 'components/ColumnHeader';
 import AddPopup from 'components/AddPopup';
 import TaskForm from 'forms/TaskForm';
 import EditPopup from 'components/EditPopup';
+import TaskPresenter from 'presenters/TaskPresenter';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -105,7 +106,7 @@ const TaskBoard = () => {
       return null;
     }
 
-    return TasksRepository.update(task.id, { task: { stateEvent: transition.event } })
+    return TasksRepository.update(TaskPresenter.id(task), { task: { stateEvent: transition.event } })
       .then(() => {
         loadColumnInitial(destination.toColumnId);
         loadColumnInitial(source.fromColumnId);
@@ -127,7 +128,7 @@ const TaskBoard = () => {
   const handleTaskCreate = (params) => {
     const attributes = TaskForm.attributesToSubmit(params);
     return TasksRepository.create({ task: attributes }).then(({ data: { task } }) => {
-      loadColumnInitial(task.state);
+      loadColumnInitial(TaskPresenter.state(task));
       handleAddClose();
     });
   };
@@ -144,21 +145,21 @@ const TaskBoard = () => {
   const handleTaskUpdate = (task) => {
     const attributes = TaskForm.attributesToSubmit(task);
 
-    return TasksRepository.update(task.id, attributes).then(() => {
-      loadColumnInitial(task.state);
+    return TasksRepository.update(TaskPresenter.id(task), attributes).then(() => {
+      loadColumnInitial(TaskPresenter.state(task));
       handleEditClose();
     });
   };
 
   const handleTaskDestroy = (task) => {
-    return TasksRepository.destroy(task.id).then(() => {
-      loadColumnInitial(task.state);
+    return TasksRepository.destroy(TaskPresenter.id(task)).then(() => {
+      loadColumnInitial(TaskPresenter.state(task));
       handleEditClose();
     });
   };
 
   const handleOpenEditPopup = (task) => {
-    setOpenedTaskId(task.id);
+    setOpenedTaskId(TaskPresenter.id(task));
     setMode(MODES.EDIT);
   };
 
