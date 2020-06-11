@@ -40,4 +40,6 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'simplecov', require: false
+  gem 'coveralls', require: false
 end
