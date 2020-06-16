@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require 'coveralls'
-Coveralls.wear!('rails')
-
-require 'simplecov'
-SimpleCov.formatter = Coveralls::SimpleCov::Formatter
-SimpleCov.start do
-  add_filter 'app/secrets'
+if ENV['CI']
+  require 'coveralls'
+  Coveralls.wear!('rails')
+else
+  require 'simplecov'
+  SimpleCov.start 'rails'
 end
 
 ENV['RAILS_ENV'] ||= 'test'
