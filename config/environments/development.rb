@@ -35,4 +35,6 @@ Rails.application.configure do
     Bullet.rails_logger = true
     Bullet.add_footer = true
   end
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.perform_caching = true
 end
