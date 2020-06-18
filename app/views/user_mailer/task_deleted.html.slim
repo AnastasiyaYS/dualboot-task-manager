@@ -1,1 +1,13 @@
-| Task #{@task.id} was deleted
+doctype html
+html
+  head
+    meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
+
+  body
+    div[align="center"]
+      h1
+        | Hello, #{@user.first_name}!
+      h2
+        | Task #{@task.id} was deleted!
+      hr 
+        | Please do not reply to this message. This mailbox is not monitored and you will not receive a response.
