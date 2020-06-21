@@ -1,34 +1,28 @@
-doctype html
-html
-  head
-    meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
-
-  body
-    div align="center"
-      h1
-        | Hello, #{@user.first_name}!
-      h2
-        | Task #{@task.id} was updated!
-    | Updated task:
-    table border=1 style="border-collapse:collapse; margin-top: 10px"
-      tr
-        td Name
-        td #{@task.name}
-      tr
-        td Description
-        td #{@task.description}
-      tr
-        td State
-        td #{@task.state}
-      tr
-        td Author
-        td #{@author_full_name}
-      tr
-        td Assignee
-        td #{@assignee_full_name}
-      tr
-        td Update time
-        td #{@task.updated_at}
-    br
-    hr 
-      | Please do not reply to this message. This mailbox is not monitored and you will not receive a response.
+div align="center"
+  h1
+    | Hello, #{@user.first_name}!
+  h2
+    | Task #{@task.id} was updated!
+| Updated task:
+table border=1 style="border-collapse:collapse; margin-top: 10px"
+  tr
+    td Name
+    td #{@task.name}
+  tr
+    td Description
+    td #{@task.description}
+  tr
+    td State
+    td #{@task.state}
+  tr
+    td Author
+    td #{@author_full_name}
+  tr
+    td Assignee
+    td #{@assignee_full_name}
+  tr
+    td Update time
+    td #{@task.updated_at}
+br
+hr 
+  | Please do not reply to this message. This mailbox is not monitored and you will not receive a response.

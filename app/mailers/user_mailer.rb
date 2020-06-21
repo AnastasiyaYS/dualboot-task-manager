@@ -28,6 +28,12 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Task Deleted')
   end
 
+  def forgot_password(user)
+    @user = user
+    
+    mail(to: @user.email, subject: 'Reset password instructions')
+  end
+
   private
 
   def get_full_name id
