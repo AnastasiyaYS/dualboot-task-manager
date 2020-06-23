@@ -16,6 +16,8 @@ services:
       - 3002:3002
     depends_on:
       - db
+      - redis
+      - sidekiq
     environment: &web-environment
       DATABASE_HOST: db
       DATABASE_USERNAME: postgres
@@ -31,6 +33,7 @@ services:
       MAILER_PORT: 587
       MAILER_DOMAIN: https://guarded-spire-16659.herokuapp.com
       MAILER_AUTHENTICATION: plain
+      REDIS_URL: redis://redis
     command: bundle exec rails s -b '0.0.0.0' -p 3000
 
   db:
@@ -40,6 +43,17 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis:5.0.9-alpine
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq -C /app/config/sidekiq.yml
+    environment: *web-environment
+    volumes: *web-volumes
+    depends_on:
+      - redis
 
 volumes:
   bundle_cache:

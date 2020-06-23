@@ -26,6 +26,7 @@ gem 'webpacker-react'
 gem 'js-routes'
 gem 'rollbar'
 gem 'newrelic_rpm'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
