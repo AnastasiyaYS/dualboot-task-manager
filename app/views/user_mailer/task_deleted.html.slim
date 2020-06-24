@@ -2,18 +2,18 @@ div align="center"
   h1
     | Hello, #{@user.first_name}!
   h2
-    | Task #{@task.id} was deleted!
+    | Task #{@task[:id]} was deleted!
 | Deleted task:
 table border=1 style="border-collapse:collapse; margin-top: 10px"
   tr
     td Name
-    td #{@task.name}
+    td #{@task[:name]}
   tr
     td Description
-    td #{@task.description}
+    td #{@task[:description]}
   tr
     td State
-    td #{@task.state}
+    td #{@task[:state]}
   tr
     td Author
     td #{@author_full_name}
@@ -22,7 +22,7 @@ table border=1 style="border-collapse:collapse; margin-top: 10px"
     td #{@assignee_full_name}
   tr
     td Create time
-    td #{@task.created_at}
+    td #{@task[:created_at]}
 br
 hr 
   | Please do not reply to this message. This mailbox is not monitored and you will not receive a response.

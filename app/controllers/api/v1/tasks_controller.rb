@@ -37,9 +37,18 @@ class Api::V1::TasksController < Api::V1::ApplicationController
 
   def destroy
     task = Task.find(params[:id])
+    task_hash = { 
+      id: task.id, 
+      name: task.name, 
+      description: task.description, 
+      state: task.state, 
+      author_id: task.author_id, 
+      assignee_id: task.assignee_id, 
+      created_at: task.created_at,
+    }
 
     if task.destroy
-      UserMailer.with({ user: current_user, task: task }).task_deleted.deliver_later
+      UserMailer.with({ user: current_user, task: task_hash }).task_deleted.deliver_later
     end
 
     respond_with(task)
