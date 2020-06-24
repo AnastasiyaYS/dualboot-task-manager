@@ -15,7 +15,7 @@ class PasswordResetForm
     generate_token(:password_reset_token, user)
     user.password_reset_sent_at = Time.zone.now
     user.save!
-    UserMailer.forgot_password(user).deliver_later
+    SendPasswordResetNotificationJob.perform_async(user.id)
   end
 
   def generate_token(column, user)
