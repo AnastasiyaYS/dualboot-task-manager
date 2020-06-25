@@ -1,26 +1,29 @@
 class Web::PasswordResetController < Web::ApplicationController
   def new
-    @password_reset = PasswordResetForm.new
+    @password_reset = PasswordResetRequestForm.new
   end
 
   def create
-    user = User.find_by_email(params[:password_reset_form][:email])
-    @password_reset = PasswordResetForm.new
-    @password_reset.send_password_reset(user) if user
+    user = User.find_by_email(params[:password_reset_request_form][:email])
+    @password_reset = PasswordResetRequestForm.new
+    send_password_reset(user) if user
     flash[:notice] = 'E-mail sent with password reset instructions.'
     redirect_to new_session_path
   end
 
   def edit
     @user = User.find_by_password_reset_token(params[:id])
-    render(file: File.join(Rails.root, 'public/404.html'), status: 404, layout: false) unless @user
+    unless @user
+      flash[:notice] = 'Token is corrupted'
+      redirect_to new_password_reset_path
+    end
   end
 
   def update
     @user = User.find_by_password_reset_token!(params[:id])
-    password_reset = PasswordResetForm.new(user_params)
-    if @user.password_reset_sent_at < 24.hour.ago
-      flash[:notice] = 'Password reset has expired'
+    password_reset = PasswordResetForm.new({ id: params[:id] }.merge(user_params))
+    if !password_reset.valid?
+      flash[:notice] = 'Password reset failed. Please try again'
       redirect_to new_password_reset_path
     elsif @user.update(user_params)
       flash[:notice] = 'Password has been reset!'
