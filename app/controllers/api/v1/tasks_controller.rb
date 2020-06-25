@@ -37,18 +37,10 @@ class Api::V1::TasksController < Api::V1::ApplicationController
 
   def destroy
     task = Task.find(params[:id])
-    task_hash = { 
-      id: task.id, 
-      name: task.name, 
-      description: task.description, 
-      state: task.state, 
-      author_id: task.author_id, 
-      assignee_id: task.assignee_id, 
-      created_at: task.created_at,
-    }
-
+    task_author = User.find(task.author.id)
+    
     if task.destroy
-      SendTaskDeleteNotificationJob.perform_async(task.id)
+      SendTaskDeleteNotificationJob.perform_async(task.id, task_author.id)
     end
 
     respond_with(task)
