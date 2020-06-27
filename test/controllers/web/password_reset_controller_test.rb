@@ -10,7 +10,7 @@ class Web::PasswordResetControllerTest < ActionController::TestCase
   test "should post create" do
     user = create(:user)
     assert_emails 1 do
-      post :create, params: { password_reset_form: { email: user.email } }
+      post :create, params: { password_reset_request_form: { email: user.email } }
     end
     assert_response :redirect
   end

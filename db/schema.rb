@@ -1,4 +1,4 @@
-ActiveRecord::Schema.define(version: 2020_06_18_170341) do
+ActiveRecord::Schema.define(version: 2020_06_27_154210) do
   enable_extension "plpgsql"
 
   create_table "tasks", force: :cascade do |t|
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_170341) do
     t.string "password_reset_token"
     t.datetime "password_reset_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["password_reset_token"], name: "index_users_on_password_reset_token", unique: true
   end
 
   add_foreign_key "tasks", "users", column: "assignee_id"

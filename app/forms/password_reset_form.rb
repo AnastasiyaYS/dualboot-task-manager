@@ -11,6 +11,8 @@ class PasswordResetForm
   validates :password_confirmation, presence: true
   validate :check_credentials
 
+  TOKEN_LIFETIME_IN_HOURS = 24
+  
   def user
     User.find_by(password_reset_token: id)
   end
@@ -18,7 +20,7 @@ class PasswordResetForm
   private
 
   def check_credentials
-    if user.password_reset_sent_at < 24.hour.ago
+    if user.password_reset_sent_at < TOKEN_LIFETIME_IN_HOURS.hour.ago
       errors.add(:password)
     end
   end
