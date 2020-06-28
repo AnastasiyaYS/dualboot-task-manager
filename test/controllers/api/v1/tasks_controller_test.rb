@@ -56,7 +56,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     author = create(:user)
     sign_in(author)
     task = create(:task, author: author)
-    
+
     assert_emails 1 do
       delete :destroy, params: { id: task.id, format: :json }
     end

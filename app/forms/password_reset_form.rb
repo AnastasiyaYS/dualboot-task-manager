@@ -12,7 +12,7 @@ class PasswordResetForm
   validate :check_credentials
 
   TOKEN_LIFETIME_IN_HOURS = 24
-  
+
   def user
     User.find_by(password_reset_token: id)
   end
