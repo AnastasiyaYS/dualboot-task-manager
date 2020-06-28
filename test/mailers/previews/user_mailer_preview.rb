@@ -34,6 +34,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   def forgot_password
     user = User.first
+    user.password_reset_token = '123'
 
     UserMailer.forgot_password(user).deliver
   end
