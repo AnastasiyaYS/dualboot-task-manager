@@ -5,7 +5,7 @@ if ENV['CI']
   Coveralls.wear!('rails')
 else
   require 'simplecov'
-  SimpleCov.start 'rails'
+  SimpleCov.start('rails')
 end
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -15,6 +15,7 @@ require 'rails/test_help'
 class ActiveSupport::TestCase
   include AuthHelper
   include FactoryBot::Syntax::Methods
+  include ActionMailer::TestHelper
   parallelize(workers: :number_of_processors)
 
   fixtures :all

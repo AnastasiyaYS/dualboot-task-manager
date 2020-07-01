@@ -25,6 +25,12 @@ services:
       GEM_PATH: /bundle_cache
       RAILS_PORT: 3000
       RUBYOPT: -W:no-deprecated -W:no-experimental
+      MAILER_USERNAME: Sukhareva Anastasiya
+      MAILER_PASSWORD: 1234S!56
+      MAILER_ADDRESS: actionmailertest45@gmail.com
+      MAILER_PORT: 587
+      MAILER_DOMAIN: https://guarded-spire-16659.herokuapp.com
+      MAILER_AUTHENTICATION: plain
     command: bundle exec rails s -b '0.0.0.0' -p 3000
 
   db:
