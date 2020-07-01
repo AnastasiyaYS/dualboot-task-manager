@@ -4,11 +4,15 @@ class Web::PasswordResetController < Web::ApplicationController
   end
 
   def create
-    @user = User.find_by_email(params[:password_reset_request_form][:email])
-    PasswordResetRequestForm.new({ email: @user.email })
-    PasswordResetService.new(@user).send_password_reset if @user
-    flash[:notice] = 'E-mail sent with password reset instructions.'
-    redirect_to(new_session_path)
+    @password_reset = PasswordResetRequestForm.new(password_reset_params)
+    if @password_reset.valid?
+      @user = User.find_by_email(params[:password_reset_request_form][:email])
+      PasswordResetService.send_password_reset(@user) if @user
+      flash[:notice] = 'E-mail sent with password reset instructions.'
+      redirect_to(new_session_path)
+    else
+      render(:new)
+    end
   end
 
   def edit
@@ -26,8 +30,8 @@ class Web::PasswordResetController < Web::ApplicationController
       redirect_to(new_password_reset_path)
       return
     end
-    password_reset = PasswordResetForm.new({ id: params[:id] }.merge(user_params(@user)))
-    if !password_reset.valid?
+    @password_reset = PasswordResetForm.new({ id: params[:id] }.merge(user_params(@user)))
+    if !@password_reset.valid?
       flash[:notice] = 'Password reset failed. Please try again'
       redirect_to(new_password_reset_path)
     elsif @user.update(user_params(@user))
@@ -44,5 +48,9 @@ class Web::PasswordResetController < Web::ApplicationController
   def user_params(user)
     role = user.type.downcase
     params.require(role).permit(:password, :password_confirmation)
+  end
+
+  def password_reset_params
+    params.require(:password_reset_request_form).permit(:email)
   end
 end
