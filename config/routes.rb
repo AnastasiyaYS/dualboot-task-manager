@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :tasks, only: [:index, :show, :create, :update, :destroy]
       resources :users, only: [:index, :show]
+      get '/api/v1/tasks/attach_image(/:id)', to: 'tasks#attach_image'
+      get '/api/v1/tasks/remove_image(/:id)', to: 'tasks#remove_image'
     end
   end
 
