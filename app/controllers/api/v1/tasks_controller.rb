@@ -1,6 +1,7 @@
 class Api::V1::TasksController < Api::V1::ApplicationController
   def index
-    tasks = Task.ransack(ransack_params).
+    tasks = Task.with_attached_image.
+      ransack(ransack_params).
       result.
       order(id: :desc).
       page(page).
@@ -10,7 +11,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def show
-    task = Task.find(params[:id])
+    task = Task.with_attached_image.find(params[:id])
 
     respond_with(task, serializer: TaskSerializer)
   end
@@ -26,7 +27,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
+    task = Task.with_attached_image.find(params[:id])
     
     if task.update(task_params)
       SendTaskUpdateNotificationJob.perform_async(task.id)
@@ -36,7 +37,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
+    task = Task.with_attached_image.find(params[:id])
     task_author = User.find(task.author.id)
     
     if task.destroy
@@ -47,7 +48,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def attach_image
-    task = Task.find(params[:id])
+    task = Task.with_attached_image.find(params[:id])
     task_attach_image_form = TaskAttachImageForm.new(attachment_params)
   
     if task_attach_image_form.invalid?
@@ -62,7 +63,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
   
   def remove_image
-    task = Task.find(params[:id])
+    task = Task.with_attached_image.find(params[:id])
     task.image.purge
   
     respond_with(task, serializer: TaskSerializer)
