@@ -13,13 +13,13 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'sidekiq/testing'
 
+Sidekiq::Testing.inline!
+
 class ActiveSupport::TestCase
   include AuthHelper
   include FactoryBot::Syntax::Methods
   include ActionMailer::TestHelper
-  parallelize(workers: :number_of_processors)
+  parallelize(workers: 1)
 
   fixtures :all
-  
-  Sidekiq::Testing.inline!
 end
