@@ -49,6 +49,6 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :expired_at, :author_id, :assignee_id, :state_event)
+    params.require(:task).permit(:id, :name, :description, :expired_at, :author_id, :assignee_id, :state_event)
   end
 end
