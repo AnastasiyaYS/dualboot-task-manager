@@ -18,8 +18,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :tasks, only: [:index, :show, :create, :update, :destroy]
       resources :users, only: [:index, :show]
-      get 'tasks(/:id)', to: 'tasks#attach_image'
-      delete 'tasks(/:id)', to: 'tasks#remove_image'
+      put 'tasks(/:id)/attachment', to: 'tasks#attach_image'
+      delete 'tasks(/:id)/attachment', to: 'tasks#remove_image'
     end
   end
 
