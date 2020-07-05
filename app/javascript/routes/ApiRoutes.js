@@ -497,9 +497,9 @@ Based on Rails 6.0.3.2 routes of App::Application
 // admin_users => /admin/users(.:format)
   // function(options)
   adminUsersPath: Utils.route([["format",false]], {}, [2,[7,"/",false],[2,[6,"admin",false],[2,[7,"/",false],[2,[6,"users",false],[1,[2,[8,".",false],[3,"format",false]],false]]]]]),
-// api_v1 => /api/v1/tasks(/:id)(.:format)
+// api_v1 => /api/v1/tasks(/:id)/attachment(.:format)
   // function(options)
-  apiV1Path: Utils.route([["id",false],["format",false]], {}, [2,[7,"/",false],[2,[6,"api",false],[2,[7,"/",false],[2,[6,"v1",false],[2,[7,"/",false],[2,[6,"tasks",false],[2,[1,[2,[7,"/",false],[3,"id",false]],false],[1,[2,[8,".",false],[3,"format",false]],false]]]]]]]]),
+  apiV1Path: Utils.route([["id",false],["format",false]], {}, [2,[7,"/",false],[2,[6,"api",false],[2,[7,"/",false],[2,[6,"v1",false],[2,[7,"/",false],[2,[6,"tasks",false],[2,[1,[2,[7,"/",false],[3,"id",false]],false],[2,[7,"/",false],[2,[6,"attachment",false],[1,[2,[8,".",false],[3,"format",false]],false]]]]]]]]]]),
 // api_v1_task => /api/v1/tasks/:id(.:format)
   // function(id, options)
   apiV1TaskPath: Utils.route([["id",true],["format",false]], {}, [2,[7,"/",false],[2,[6,"api",false],[2,[7,"/",false],[2,[6,"v1",false],[2,[7,"/",false],[2,[6,"tasks",false],[2,[7,"/",false],[2,[3,"id",false],[1,[2,[8,".",false],[3,"format",false]],false]]]]]]]]]),

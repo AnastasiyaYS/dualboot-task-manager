@@ -27,13 +27,8 @@ export default {
     return FetchHelper.delete(path);
   },
 
-  attach_image(id) {
-    const path = apiV1Path(id);
-    return FetchHelper.putFormData(path);
-  },
-
-  remove_image(id) {
-    const path = apiV1Path(id);
-    return FetchHelper.putFormData(path);
+  update_image(id, attachmentParams) {
+    const path = routes.apiV1Path(id);
+    return FetchHelper.putFormData(path, attachmentParams);
   },
 };

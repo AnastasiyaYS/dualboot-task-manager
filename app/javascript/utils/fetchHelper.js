@@ -65,11 +65,24 @@ export default {
   },
 
   putFormData(url, json) {
-    const body = decamelize(json);
-    const formData = objectToFormData(body);
+    if (json) {
+      const { image } = json.attachment;
+      const body = decamelize(json);
+      body.attachment.image = image;
+      const formData = objectToFormData(body);
 
+      return axios
+        .put(url, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(camelize);
+    }
+
+    const body = decamelize(json);
     return axios
-      .put(url, formData, {
+      .delete(url, body, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
