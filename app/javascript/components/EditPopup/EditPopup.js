@@ -30,7 +30,7 @@ const EditPopup = ({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
   const handleCardUpdate = () => {
     setSaving(true);
 
-    onCardUpdate(task).catch((error) => {
+    onCardUpdate(task, onClose).catch((error) => {
       setSaving(false);
       setErrors(error || {});
 
@@ -44,7 +44,7 @@ const EditPopup = ({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
   const handleCardDestroy = () => {
     setSaving(true);
 
-    onCardDestroy(task).catch((error) => {
+    onCardDestroy(task, onClose).catch((error) => {
       setSaving(false);
 
       // eslint-disable-next-line no-alert
